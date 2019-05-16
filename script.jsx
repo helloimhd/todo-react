@@ -127,32 +127,24 @@ class ItemList extends React.Component {
     }
 
     storeInList = () => {
-        let listObj = {}
         let currentWord = this.props.word;
         if (currentWord !== "") {
-            // put inside obj first
-            listObj["word"] = currentWord
-
-            // push the obj into the array so its
             this.state.list.push(currentWord)
-            console.log(this.state.list)
         }
     }
 
     render() {
         {this.storeInList()}
-
-        let allItems = this.state.list.map( (obj, index) => {
-            return <tr>
-            <td>{obj.word}</td>
-            <td><button id={index} onClick={this.remove}>❌</button></td>
-            <td>{obj.moment}</td>
-            </tr>
+        console.log(this.state.list)
+        let allItems = this.state.list.map(list => {
+            return (
+                <li>{list}</li>
+            )
         }) // end of map
         return (
-            <div>
-                {this.state.list}
-            </div>
+            <ul>
+                {allItems}
+            </ul>
         )
     }
 }
@@ -191,6 +183,7 @@ class App extends React.Component {
         if (e.key === 'Enter') {
            // console.log(e.target.value)
             this.props.setWord(e.target.value)
+            e.target.value = "";
         }
     }
 
