@@ -1,12 +1,11 @@
 
 class List extends React.Component {
-        constructor(){
+  constructor(){
     super()
     this.state = {
         list: [],
         word: ""
     }
-
 
     this.changeHandler = this.changeHandler.bind( this );
 
@@ -86,7 +85,8 @@ class List extends React.Component {
       return (
         <div className="list">
 
-
+          <input onChange={this.changeHandler} value={this.state.word} onKeyDown={this.takeItemOnEnter}/>
+          <button onClick={this.takeItem}>add item</button>
 
           <table id="itemTable">
             <thead>
@@ -105,101 +105,18 @@ class List extends React.Component {
   }
 }
 
-/////////////////////////////////////////////
+
 class Form extends React.Component {
     render() {
         return (
             <div>
-                <input onChange={this.props.changeHandler}onKeyDown={this.props.takeItemOnEnter}/>
-                <button type="button">Add Item</button>
+
             </div>
-        )
-    }
-}
-
-////////////////////////////////////////////
-class ItemList extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            list: []
-        }
-    }
-
-    storeInList = () => {
-        list = this.state.list;
-        list.push(this.props.stateWord)
-    }
-
-    render() {
-        return (
-            <TodoItem />
-        )
-    }
-}
-
-//////////////////////////////////////////
-class TodoItem extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            word: ""
-        }
-        this.setWord = this.setWord.bind( this );
-    }
-
-    setWord(word) {
-        this.setState({word: word})
-    }
-
-    changeHandler = e => {
-        //console.log(e.target.value)
-    }
-
-    takeItemOnEnter = e => {
-        if (e.key === 'Enter') {
-            //console.log(e.target.value)
-            this.setWord(e.target.value)
-        }
-    }
-
-    render() {
-        return (
-            <div>
-                <Form
-                    changeHandler={this.changeHandler}
-                    takeItemOnEnter={this.takeItemOnEnter}>
-                </Form>
-                <ItemList stateWord={this.state.word} />
-            </div>
-        )
-    }
-}
-
-//////////////////////////////////////////////
-class App extends React.Component {
-    changeHandler = e => {
-        //console.log(e.target.value)
-    }
-
-    takeItemOnEnter = e => {
-        if (e.key === 'Enter') {
-            //console.log(e.target.value)
-            this.props.setWord(e.target.value)
-        }
-    }
-
-    render() {
-        return (
-            <Form
-            changeHandler={this.changeHandler}
-            takeItemOnEnter={this.takeItemOnEnter}>
-            </Form>
         )
     }
 }
 
 ReactDOM.render(
-    <ItemList />,
+    <List/>,
     document.getElementById('root')
 );
