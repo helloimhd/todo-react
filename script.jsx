@@ -127,13 +127,32 @@ class ItemList extends React.Component {
     }
 
     storeInList = () => {
-        list = this.state.list;
-        list.push(this.props.stateWord)
+        let listObj = {}
+        let currentWord = this.props.word;
+        if (currentWord !== "") {
+            // put inside obj first
+            listObj["word"] = currentWord
+
+            // push the obj into the array so its
+            this.state.list.push(currentWord)
+            console.log(this.state.list)
+        }
     }
 
     render() {
+        {this.storeInList()}
+
+        let allItems = this.state.list.map( (obj, index) => {
+            return <tr>
+            <td>{obj.word}</td>
+            <td><button id={index} onClick={this.remove}>❌</button></td>
+            <td>{obj.moment}</td>
+            </tr>
+        }) // end of map
         return (
-            <TodoItem />
+            <div>
+                {this.state.list}
+            </div>
         )
     }
 }
@@ -152,25 +171,11 @@ class TodoItem extends React.Component {
         this.setState({word: word})
     }
 
-    changeHandler = e => {
-        //console.log(e.target.value)
-    }
-
-    takeItemOnEnter = e => {
-        if (e.key === 'Enter') {
-            //console.log(e.target.value)
-            this.setWord(e.target.value)
-        }
-    }
-
     render() {
         return (
             <div>
-                <Form
-                    changeHandler={this.changeHandler}
-                    takeItemOnEnter={this.takeItemOnEnter}>
-                </Form>
-                <ItemList stateWord={this.state.word} />
+                <App setWord={this.setWord} />
+                <ItemList word={this.state.word} />
             </div>
         )
     }
@@ -184,7 +189,7 @@ class App extends React.Component {
 
     takeItemOnEnter = e => {
         if (e.key === 'Enter') {
-            //console.log(e.target.value)
+           // console.log(e.target.value)
             this.props.setWord(e.target.value)
         }
     }
@@ -192,14 +197,14 @@ class App extends React.Component {
     render() {
         return (
             <Form
-            changeHandler={this.changeHandler}
-            takeItemOnEnter={this.takeItemOnEnter}>
+                changeHandler={this.changeHandler}
+                takeItemOnEnter={this.takeItemOnEnter}>
             </Form>
         )
     }
 }
 
 ReactDOM.render(
-    <ItemList />,
+    <TodoItem />,
     document.getElementById('root')
 );
